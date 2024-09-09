@@ -113,7 +113,7 @@ def error():
 @app.route('/download_nbconvert')
 def download_nbconvert():
     try:
-        return send_file('deforestation_detection.nbconvert', as_attachment=True)
+        return send_file('deforestation_detection.ipynb.nbconvert', as_attachment=True)
     except Exception as e:
         return str(e)
 
