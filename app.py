@@ -37,22 +37,28 @@ def index():
 
 def run_notebook(area, start_date, end_date):
     print("Run_notebook()")
+
     # wipe image_ids.json
     with open('image_ids.json', 'w') as f:
         f.write('{}')
-    print("here2")
+
+    print("Wiped image_ids.json")
+
     notebook_path = "deforestation_detection.ipynb"
     command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=600"
     # command = f"jupyter nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=600"
-    print("here3")
+
     # set environment variables to pass to the notebook
     env = {
         'AREA': area,
         'START_DATE': start_date,
         'END_DATE': end_date,
     }
+
+    print("Attempting to run notebook")
     # subprocess.run(command, shell=True, env=env)
     subprocess.run(command, shell=True, env={**os.environ, **env})
+    print("Successfully ran notebook")
 
     # get image IDs
     if not os.path.exists('image_ids.json') or os.path.getsize('image_ids.json') == 0:
