@@ -22,7 +22,7 @@ RUN wget https://github.com/conda-forge/miniforge/releases/latest/download/Minif
 ENV PATH="/opt/conda/bin:$PATH"
 
 # Step 4: Install Spark
-RUN curl -O https://dlcdn.apache.org/spark/spark-3.1.2/spark-3.1.2-bin-hadoop2.7.tgz && \
+RUN curl -O https://dlcdn.apache.org/spark/spark-3.5.2/spark-3.5.2-bin-hadoop3.tgz && \
     tar zxvf spark-3.1.2-bin-hadoop2.7.tgz && \
     mv spark-3.1.2-bin-hadoop2.7 /usr/local/spark && \
     rm spark-3.1.2-bin-hadoop2.7.tgz
