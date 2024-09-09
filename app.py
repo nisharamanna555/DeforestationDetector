@@ -45,7 +45,11 @@ def run_notebook(area, start_date, end_date):
     print("Wiped image_ids.json")
 
     notebook_path = "deforestation_detection.ipynb"
-    command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=2000"
+
+    output_path = "deforsetation_detection.nbconvert.ipynb"
+    command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --output {output_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=2000"
+
+    # command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=2000"
     # command = f"jupyter nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=600"
 
     # set environment variables to pass to the notebook
@@ -105,6 +109,13 @@ def result():
 @app.route('/error')
 def error():
     return render_template('error.html')
+
+@app.route('/download_nbconvert')
+def download_nbconvert():
+    try:
+        return send_file('deforestation_detection.nbconvert', as_attachment=True)
+    except Exception as e:
+        return str(e)
 
 # get image from MongoDB
 @app.route('/image/<image_id>')
