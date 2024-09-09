@@ -45,7 +45,7 @@ def run_notebook(area, start_date, end_date):
     print("Wiped image_ids.json")
 
     notebook_path = "deforestation_detection.ipynb"
-    command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=600"
+    command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=2000"
     # command = f"jupyter nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=600"
 
     # set environment variables to pass to the notebook
@@ -56,8 +56,16 @@ def run_notebook(area, start_date, end_date):
     }
 
     print("Attempting to run notebook")
-    # subprocess.run(command, shell=True, env=env)
-    subprocess.run(command, shell=True, env={**os.environ, **env})
+
+    result = subprocess.run(command, shell=True, env={**os.environ, **env})
+
+    # Log stdout and stderr
+    print("Notebook stdout:", result.stdout)
+    print("Notebook stderr:", result.stderr)
+
+    if result.returncode != 0:
+        raise RuntimeError(f"Error running notebook: {result.stderr}")
+
     print("Successfully ran notebook")
 
     # get image IDs
