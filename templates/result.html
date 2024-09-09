@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deforestation Analysis Results</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            backdrop-filter: blur(5px);
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255);
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            margin: 20px auto; /* Center the container and add margin for spacing */
+            text-align: center;
+        }
+
+        h1 {
+            color: #3f5a36;
+            font-size: 28px;
+            margin-top: 0;
+        }
+
+        .image-row {
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            margin-bottom: 30px;
+            height: auto;
+        }
+        
+        .image-row img {
+            width: 100%; /* Make images responsive */
+            max-width: 600px; /* Limit the maximum width */
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .image-row h2 {
+            font-size: 20px;
+            color: #3f5a36;
+            margin-bottom: 15px;
+        }
+
+        .text-image-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px; /* Increased margin for better spacing */
+            height: auto; /* Allow content to dictate height */
+        }
+
+        .image-div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 50%; /* Adjusted to take up half the space */
+            text-align: left;
+        }
+        
+        .text-div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40%; /* Adjusted to take up less space */
+            text-align: left;
+            padding-left: 20px; /* Add some padding for spacing */
+        }
+
+        .text-image-row img {
+            width: 100%; /* Make images responsive */
+            max-width: 600px; /* Limit the maximum width */
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .text-image-row h2 {
+            font-size: 20px;
+            color: #3f5a36;
+            margin-bottom: 15px;
+        }
+
+        .text-image-row p {
+            font-size: 16px;
+            color: #222222;
+            margin: 0;
+        }
+
+        .text-image-row li {
+            font-size: 16px;
+            color: #222222;
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deforestation Analysis Results</h1>
+
+        <div class="image-row">
+            <div>
+                <h2>Satellite Images of Area at Start Date</h2>
+                <!-- <img src="../static/placeholder.png" alt="Start Composite Image"> -->
+                <img src="{{ url_for('get_image', image_id=start_image_id) }}" alt="Start Composite Image">
+            </div>
+            <div>
+                <h2>Satellite Images of Area at End Date</h2>
+                <!-- <img src="../static/placeholder.png" alt="End Composite Image"> -->
+                <img src="{{ url_for('get_image', image_id=end_image_id) }}" alt="End Composite Image">
+            </div>
+        </div>
+        
+        <div class="text-image-row">
+            <div class="image-div">
+                <h2>Clustered Image</h2>
+                <!-- <img src="../static/placeholder.png" alt="Clustered Composite Image"> -->
+                <img src="{{ url_for('get_image', image_id=clustered_image_id) }}" alt="Clustered Composite Image">
+            </div>
+            <div class="text-div">
+                <p>
+                    This clustered image highlights changes in land cover over time.
+                    <ul>
+                        <li><strong style="color: #ff0000;">Red:</strong> Indicates a high level of land cover change, typically corresponding to areas where significant deforestation has occurred.</li>
+                        <li><strong style="color: #00ff00;">Green:</strong> Represents moderate levels of land cover change, possibly indicating areas with partial or less intense changes in vegetation or land cover.</li>
+                        <li><strong style="color: #0000ff;">Blue:</strong> Indicates a low level of land cover change, generally corresponding to areas with minimal or no change in land cover.</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
