@@ -48,7 +48,9 @@ def run_notebook(area, start_date, end_date):
     notebook_path = "deforestation_detection.ipynb"
 
     output_path = "/app/deforestation_detection.nbconvert.ipynb"
-    command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --output {output_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=10000"
+    # command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --output {output_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=10000"
+    command = "echo 'Hello from Railway'"
+
     print(f"Running command: {command}")
 
     # command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=2000"
