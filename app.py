@@ -17,20 +17,22 @@ print("Jupyter Path:", jupyter_path)
 client = MongoClient(os.getenv('MONGO_URI'))
 db = client['deforestation_db']
 fs = GridFS(db)
-
+print("here")
 @app.route('/')
 def index():
+    print("index")
     return render_template('index.html')
 
 def run_notebook(area, start_date, end_date):
+    print("try to run notebook")
     # wipe image_ids.json
     with open('image_ids.json', 'w') as f:
         f.write('{}')
-
+    print("here2")
     notebook_path = "deforestation_detection.ipynb"
     command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=600"
     # command = f"jupyter nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=600"
-
+    print("here3")
     # set environment variables to pass to the notebook
     env = {
         'AREA': area,
