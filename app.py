@@ -9,7 +9,8 @@ from bson.objectid import ObjectId
 import io
 
 app = Flask(__name__)
-print("hi, booting up app")
+print("Booting up app")
+
 jupyter_path = os.getenv('JUPYTER_PATH')
 print("Jupyter Path:", jupyter_path)
 
@@ -17,14 +18,25 @@ print("Jupyter Path:", jupyter_path)
 client = MongoClient(os.getenv('MONGO_URI'))
 db = client['deforestation_db']
 fs = GridFS(db)
-print("here")
+print("MongoDB client connection attempted")
+# @app.route('/')
+# def index():
+#     print("index")
+#     return render_template('index.html')
+
 @app.route('/')
 def index():
-    print("index")
+    print("Index()")
+    try:
+        client.server_info()
+        print("MongoDB connection succeeded")
+    except Exception as e:
+        print("MongoDB connection failed:", e)
     return render_template('index.html')
 
+
 def run_notebook(area, start_date, end_date):
-    print("try to run notebook")
+    print("Run_notebook()")
     # wipe image_ids.json
     with open('image_ids.json', 'w') as f:
         f.write('{}')
