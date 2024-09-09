@@ -9,8 +9,9 @@ from bson.objectid import ObjectId
 import io
 
 app = Flask(__name__)
-
+print("hi, booting up app")
 jupyter_path = os.getenv('JUPYTER_PATH')
+print("Jupyter Path:", jupyter_path)
 
 # connect to MongoDB
 client = MongoClient(os.getenv('MONGO_URI'))
