@@ -56,7 +56,7 @@ def run_notebook(area, start_date, end_date):
     command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --output {output_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=10000"
     # command = "echo 'Hello from Railway'"
 
-    print(f"Running command: {command}")
+    print(f"Running simple command: {command}")
 
     # command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=2000"
     # command = f"jupyter nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=600"
