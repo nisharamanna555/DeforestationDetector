@@ -9,7 +9,8 @@ ENV HADOOP_VERSION="3"
 ENV SPARK_PACKAGE="spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}"
 ENV SPARK_HOME="/usr/local/spark"
 ENV PYTHON_PATH="/opt/conda/bin/python3"
-ENV PATH="/opt/conda/bin:/usr/local/spark/bin:/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH"
+# ENV PATH="/opt/conda/bin:/usr/local/spark/bin:/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH"
+ENV PATH="/usr/bin:/opt/conda/bin:/usr/local/spark/bin:/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH"
 
 # Step 2: Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -54,4 +55,5 @@ COPY . .
 
 # Step 8: Expose the port and run the app
 EXPOSE 5000
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
+# CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
+CMD ["/bin/bash", "-c", "bash --version && gunicorn -w 4 -b 0.0.0.0:5000 app:app"]
