@@ -56,4 +56,4 @@ COPY . .
 # Step 8: Expose the port and run the app
 EXPOSE 5000
 # CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
-CMD ["/bin/bash", "-c", "bash --version && gunicorn -w 4 -b 0.0.0.0:5000 app:app"]
+CMD ["/usr/bin/bash", "-c", "bash --version && gunicorn -w 4 -b 0.0.0.0:5000 app:app"]
