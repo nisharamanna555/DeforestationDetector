@@ -13,7 +13,7 @@ ENV PATH="/usr/bin:/opt/conda/bin:/usr/local/spark/bin:/usr/lib/jvm/java-11-open
 
 # Step 2: Install system dependencies
 RUN apt-get update && apt-get install -y \
-    default-jdk \
+    openjdk-11-jdk \
     curl \
     git \
     wget \
