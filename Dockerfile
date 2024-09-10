@@ -26,6 +26,9 @@ RUN apt-get update && apt-get install -y \
     && ln -sf /bin/bash /bin/sh \
     && rm -rf /var/lib/apt/lists/*
 
+# Debugging step: Verify that bash is correctly installed and linked
+RUN which bash && bash --version && chmod +x /bin/bash
+
 # Step 3: Install Miniforge (to manage Python packages and Jupyter)
 RUN wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O Miniforge3.sh && \
     bash Miniforge3.sh -b -p /opt/conda && \
