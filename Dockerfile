@@ -3,11 +3,13 @@ FROM python:3.10-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-ENV SPARK_VERSION=3.5.2
-ENV HADOOP_VERSION=3
-ENV SPARK_PACKAGE=spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}
-ENV SPARK_HOME=/usr/local/spark
+ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+ENV SPARK_VERSION="3.5.2"
+ENV HADOOP_VERSION="3"
+ENV SPARK_PACKAGE="spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}"
+ENV SPARK_HOME="/usr/local/spark"
+ENV PYTHON_PATH="/opt/conda/bin/python3"
+ENV PATH="/opt/conda/bin:/usr/local/spark/bin:/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH"
 
 # Step 2: Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -21,6 +23,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     python3-dev \
     bash \
+    && ln -sf /bin/bash /bin/sh \
     && rm -rf /var/lib/apt/lists/*
 
 # Step 3: Install Miniforge (to manage Python packages and Jupyter)
@@ -28,26 +31,17 @@ RUN wget https://github.com/conda-forge/miniforge/releases/latest/download/Minif
     bash Miniforge3.sh -b -p /opt/conda && \
     rm Miniforge3.sh
 
-ENV PATH="/opt/conda/bin:$PATH"
-
+# Step 4: Download and install Spark
 RUN wget https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/${SPARK_PACKAGE}.tgz \
     && tar -xzf ${SPARK_PACKAGE}.tgz \
     && mv ${SPARK_PACKAGE} /usr/local/spark \
     && rm ${SPARK_PACKAGE}.tgz
 
-ENV SPARK_HOME="/usr/local/spark"
-ENV PATH="$SPARK_HOME/bin:$PATH"
-
-# Step 5: Set environment variables for Java, Python, Spark
-ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
-ENV PYTHON_PATH="/opt/conda/bin/python3"
-ENV PATH="/opt/conda/bin:/usr/local/spark/bin:/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH"
-
-# Step 6: Install MongoDB and Jupyter dependencies
+# Step 5: Install MongoDB, Jupyter, and other dependencies
 RUN conda install -y jupyter && \
     pip install pymongo gunicorn Flask geemap requests
 
-# Install Python dependencies
+# Step 6: Install Python dependencies from requirements.txt
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
