@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     python3-dev \
+    bash \
     && rm -rf /var/lib/apt/lists/*
 
 # Step 3: Install Miniforge (to manage Python packages and Jupyter)
