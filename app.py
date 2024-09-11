@@ -9,32 +9,17 @@ from bson.objectid import ObjectId
 import io
 
 app = Flask(__name__)
-print("Booting up app")
 
 jupyter_path = os.getenv('JUPYTER_PATH')
-print("Jupyter Path:", jupyter_path)
 
 # connect to MongoDB
 client = MongoClient(os.getenv('MONGO_URI'))
 db = client['deforestation_db']
 fs = GridFS(db)
-print("MongoDB client connection attempted")
-# @app.route('/')
-# def index():
-#     print("index")
-#     return render_template('index.html')
 
 @app.route('/')
 def index():
-    print("Index()")
-    try:
-        client.server_info()
-        print("MongoDB connection succeeded")
-    except Exception as e:
-        print("MongoDB connection failed:", e)
     return render_template('index.html')
-
-
 
 def run_notebook(area, start_date, end_date):
     print("Run_notebook()")
@@ -43,23 +28,12 @@ def run_notebook(area, start_date, end_date):
     with open('image_ids.json', 'w') as f:
         f.write('{}')
 
-    print("Wiped image_ids.json")
-    
-    with open('/app/test_file.txt', 'w') as f:
-        f.write('This is a test file')
-    print("Wrote test file")
-
     # notebook_path = "deforestation_detection.ipynb"
     notebook_path = "deforestation_detection2.ipynb"
-
     output_path = "/app/deforestation_detection.nbconvert.ipynb"
+    
     command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --output {output_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=10000"
-    # command = "echo 'Hello from Railway'"
-
-    print(f"Running simple command: {command}")
-
     # command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=2000"
-    # command = f"jupyter nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=600"
 
     # set environment variables to pass to the notebook
     env = {
