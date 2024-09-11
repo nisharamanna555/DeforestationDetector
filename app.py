@@ -26,7 +26,8 @@ def run_notebook(area, start_date, end_date):
     with open('image_ids.json', 'w') as f:
         f.write('{}')
 
-    notebook_path = "deforestation_detection.ipynb"
+    # notebook_path = "deforestation_detection.ipynb"
+    notebook_path = "deforestation_detection2.ipynb"
     output_path = "/app/deforestation_detection.nbconvert.ipynb"
     
     command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --output {output_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=10000"
