@@ -44,7 +44,7 @@ def run_notebook(area, start_date, end_date):
 
     try:
         print("Attempting to run notebook")
-        result = subprocess.run(command, shell=True, env={**os.environ, **env}, capture_output=True, text=True, timeout=1200)
+        result = subprocess.run(command, shell=True, env={**os.environ, **env}, capture_output=True, text=True, timeout=3600)
 
         # Log stdout and stderr
         print("Notebook stdout:", result.stdout)
