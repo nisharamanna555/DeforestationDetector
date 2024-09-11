@@ -8,9 +8,11 @@ ENV JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 ENV SPARK_VERSION="3.5.2"
 ENV HADOOP_VERSION="3"
 ENV SPARK_PACKAGE="spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}"
+# ENV SPARK_PACKAGE="spark-3.5.2-bin-hadoop3"
 ENV SPARK_HOME="/usr/local/spark"
 ENV PYTHON_PATH="/opt/conda/bin/python3"
-ENV PATH="/usr/bin:/opt/conda/bin:/usr/local/spark/bin:/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH"
+# ENV PATH="/usr/bin:/opt/conda/bin:/usr/local/spark/bin:/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH"
+ENV PATH="/usr/bin:/opt/conda/bin:/usr/local/spark/bin:/usr/lib/jvm/java-17-openjdk-amd64/bin:$PATH"
 
 # Step 2: Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -41,6 +43,11 @@ RUN wget https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/${SPARK_PA
     && tar -xzf ${SPARK_PACKAGE}.tgz \
     && mv ${SPARK_PACKAGE} /usr/local/spark \
     && rm ${SPARK_PACKAGE}.tgz
+
+# RUN wget https://archive.apache.org/dist/spark/spark-3.5.2/spark-3.5.2-bin-hadoop3.tgz \
+#     && tar -xzf spark-3.5.2-bin-hadoop3.tgz \
+#     && mv spark-3.5.2-bin-hadoop3 /usr/local/spark \
+#     && rm spark-3.5.2-bin-hadoop3.tgz
 
 # Step 5: Install MongoDB, Jupyter, and other dependencies
 RUN conda install -y jupyter && \
