@@ -22,18 +22,14 @@ def index():
     return render_template('index.html')
 
 def run_notebook(area, start_date, end_date):
-    print("Run_notebook()")
-
     # wipe image_ids.json
     with open('image_ids.json', 'w') as f:
         f.write('{}')
 
-    # notebook_path = "deforestation_detection.ipynb"
-    notebook_path = "deforestation_detection2.ipynb"
+    notebook_path = "deforestation_detection.ipynb"
     output_path = "/app/deforestation_detection.nbconvert.ipynb"
     
     command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --output {output_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=10000"
-    # command = f"{jupyter_path} nbconvert --to notebook --execute {notebook_path} --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=2000"
 
     # set environment variables to pass to the notebook
     env = {
@@ -42,51 +38,7 @@ def run_notebook(area, start_date, end_date):
         'END_DATE': end_date,
     }
 
-    try:
-        print("Attempting to run notebook")
-        result = subprocess.run(command, shell=True, env={**os.environ, **env}, capture_output=True, text=True, timeout=3600)
-
-        # Log stdout and stderr
-        print("Notebook stdout:", result.stdout)
-        print("Notebook stderr:", result.stderr)
-
-        if result.returncode != 0:
-            raise RuntimeError(f"Error running notebook: {result.stderr}")
-
-        print("Successfully ran notebook")
-
-    except subprocess.TimeoutExpired:
-        print("Notebook execution timed out.")
-        raise RuntimeError("Notebook execution timed out.")
-    
-    except subprocess.CalledProcessError as e:
-        print(f"Error in subprocess: {e}")
-        raise RuntimeError(f"Error running notebook: {e}")
-    
-    except Exception as e:
-        print(f"General error: {e}")
-        raise RuntimeError(f"An unexpected error occurred: {e}")
-
-
-    # print("Attempting to run notebook")
-
-    # result = subprocess.run(command, shell=True, env={**os.environ, **env})
-
-    # # Log stdout and stderr
-    # print("Notebook stdout:", result.stdout)
-    # print("Notebook stderr:", result.stderr)
-
-    # if result.returncode != 0:
-    #     raise RuntimeError(f"Error running notebook: {result.stderr}")
-
-    # print("Successfully ran notebook")
-
-    # Check if the file was created
-    if os.path.exists(output_path):
-        print(f"Output file created: {output_path}")
-    else:
-        print(f"Output file NOT created: {output_path}")
-
+    subprocess.run(command, shell=True, env={**os.environ, **env}, capture_output=True, text=True, timeout=3600)
 
     # get image IDs
     if not os.path.exists('image_ids.json') or os.path.getsize('image_ids.json') == 0:
