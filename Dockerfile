@@ -3,7 +3,8 @@ FROM python:3.10-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
-ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+# ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+ENV JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 ENV SPARK_VERSION="3.5.2"
 ENV HADOOP_VERSION="3"
 ENV SPARK_PACKAGE="spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}"
@@ -13,7 +14,7 @@ ENV PATH="/usr/bin:/opt/conda/bin:/usr/local/spark/bin:/usr/lib/jvm/java-11-open
 
 # Step 2: Install system dependencies
 RUN apt-get update && apt-get install -y \
-    openjdk-11-jdk \
+    default-jdk \
     curl \
     git \
     wget \
